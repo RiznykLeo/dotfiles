@@ -52,3 +52,6 @@
 
 [init]
   defaultBranch = master
+[user]
+	email = riznyk.leo@gmail.com
+	name = leonid riznyk
