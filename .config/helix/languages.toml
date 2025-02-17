@@ -1,0 +1,33 @@
+[language-server]
+biome = { command = "biome", args = ["lsp-proxy"] }
+emmet-lsp = {command= "emmet-langugage-server", args=["--stdio"]}
+tailwindcss-lsp = {command= "tailwindcss-language-serveremmet-lsp", args=["--stdio"]}
+
+[[language]]
+name = "javascript"
+auto-format = true
+language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "biome" ]
+formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "file.js"] }
+
+[[language]]
+name = "typescript"
+auto-format = true
+language-servers = ["tailwindcss-lsp",{ name = "typescript-language-server", except-features = [ "format" ] }, "biome", "emmet-lsp" ]
+formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "file.ts"] }
+
+[[language]]
+name = "tsx"
+auto-format = true
+language-servers = ["tailwindcss-lsp", { name = "typescript-language-server", except-features = [ "format" ] }, "biome", "emmet-lsp"  ]
+formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "file.tsx"] }
+
+[[language]]
+name = "jsx"
+auto-format = true
+language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "biome" ]
+formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "file.jsx"] }
+
+[[language]]
+name = "json"
+language-servers = [ { name = "vscode-json-language-server", except-features = [ "format" ] }, "biome" ]
+formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "file.json"] }
