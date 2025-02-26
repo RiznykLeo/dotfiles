@@ -54,3 +54,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 eval "$(zoxide init zsh)"
 
 alias cd="z"
+
+# GO
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH" 

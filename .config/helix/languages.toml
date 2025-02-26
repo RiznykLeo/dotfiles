@@ -36,3 +36,7 @@ formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "
 name = "json"
 language-servers = [ { name = "vscode-json-language-server", except-features = [ "format" ] }, "biome", "cspell" ]
 formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "file.json"] }
+
+[[language]]
+name="go"
+auto-format=true
