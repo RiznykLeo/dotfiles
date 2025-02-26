@@ -33,3 +33,11 @@ then use GNU stow to create symlinks
 $ stow .
 ````
 
+## Apps
+
+### Helix
+
+install spellchecker and ensure it's in PATH
+```
+$ npm/pnpm/bun i -g @vlabo/cspell-lsp
+```
