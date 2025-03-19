@@ -58,3 +58,34 @@ alias cd="z"
 # GO
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH" 
+
+# GH
+
+pr-stats() {
+
+local added=$(gh pr diff | grep "^+" | grep -v "^+++" | wc -l)
+  local deleted=$(gh pr diff | grep "^-" | grep -v "^---" | wc -l)
+  local net_change=$((deleted - added))
+  local percentage=0
+  local change_description=""
+  
+  if [ $deleted -ne 0 ] && [ $net_change -gt 0 ]; then
+    percentage=$(echo "scale=1; ($net_change * 100) / $deleted" | bc)
+    change_description="thinner"
+  elif [ $added -ne 0 ] && [ $net_change -lt 0 ]; then
+    percentage=$(echo "scale=1; (${net_change#-} * 100) / $added" | bc)
+    change_description="thiccccer"
+  else
+    percentage="0.0"
+    change_description="unchanged"
+  fi
+  
+  local green='\033[0;32m'
+  local red='\033[0;31m'
+  local blue='\033[0;34m'
+  local reset='\033[0m'
+  
+  printf "Lines added:   ${green}%-8d${reset}\n" $added
+  printf "Lines deleted: ${red}%-8d${reset}\n" $deleted
+  printf "Net change:    ${blue}%-8d${reset} (code became ${blue}%.1f%%${reset} ${change_description})\n" $net_change $percentage
+}
