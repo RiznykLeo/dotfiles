@@ -17,6 +17,14 @@ display-inlay-hints = false
 [keys.normal]
 esc = ["collapse_selection", "keep_primary_selection"]
 ";" = "command_mode"
+C-g = [
+    ":write-all",
+    ":new",
+    ":insert-output lazygit",
+    ":buffer-close!",
+    ":redraw",
+    ":reload-all"
+]
 
 [keys.normal.space]
 w=":write"
