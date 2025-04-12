@@ -1,4 +1,12 @@
-theme = "dark_high_contrast"
+theme = "amberwood"
+# Themes i like
+# 
+# snazzy
+# bogster
+# amberwood
+# ayu-evolve (darker contrast)
+# ayu-dark
+# doom_acario_dark (colder)
 
 [editor]
 mouse=false
