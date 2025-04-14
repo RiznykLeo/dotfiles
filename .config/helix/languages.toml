@@ -1,32 +1,125 @@
 [language-server]
-biome = { command = "biome", args = ["lsp-proxy"] }
-emmet-lsp = {command= "emmet-langugage-server", args=["--stdio"]}
-tailwindcss-lsp = {command= "tailwindcss-language-serveremmet-lsp", args=["--stdio"]}
-cspell = {command= "cspell-lsp", args=["--stdio"]}
+emmet-lsp = {command = "emmet-langugage-server", args = ["--stdio"]}
+cspell = {command = "cspell-lsp", args = ["--stdio"]}
+
+[language-server.biome]
+args = ["lsp-proxy"]
+command = "biome"
+
+[language-server.deno-lsp]
+args = ["lsp"]
+command = "deno"
+required-root-patterns = ["deno.*"]
+
+[language-server.deno-lsp.config.deno]
+enable = true
+suggest = { completeFunctionCalls = true, imports = { hosts = { "https://deno.land" = true } } }
+
+[language-server.typescript-language-server]
+required-root-patterns = ["package.json", "tsconfig.json"]
 
 [[language]]
 name = "javascript"
+language-id = "javascript"
+scope = "source.js"
+injection-regex = "^(js|javascript)$"
+file-types = ["js"]
+shebangs = ["deno", "node"]
+roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
 auto-format = true
-language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "biome", "cspell" ]
-formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "file.js"] }
-
-[[language]]
-name = "typescript"
-auto-format = true
-language-servers = ["tailwindcss-lsp",{ name = "typescript-language-server", except-features = [ "format" ] }, "biome", "emmet-lsp", "cspell" ]
-formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "file.ts"] }
-
-[[language]]
-name = "tsx"
-auto-format = true
-language-servers = ["tailwindcss-lsp", { name = "typescript-language-server", except-features = [ "format" ] }, "biome", "emmet-lsp" , "cspell" ]
-formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "file.tsx"] }
+language-servers = [
+  { name = "deno-lsp", except-features = [
+    "format",
+  ] },
+  { name = "typescript-language-server", except-features = [
+    "format",
+  ] },
+  "biome",
+  "cspell"
+]
+formatter = { command = "biome", args = [
+  "format",
+  "--stdin-file-path",
+  "a.js",
+] }
 
 [[language]]
 name = "jsx"
+language-id = "javascriptreact"
+scope = "source.jsx"
+injection-regex = "^(jsx)$"
+file-types = ["jsx"]
+shebangs = ["deno", "node"]
+roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
 auto-format = true
-language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "biome", "cspell" ]
-formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "file.jsx"] }
+language-servers = [
+  { name = "deno-lsp", except-features = [
+    "format",
+  ] },
+  { name = "typescript-language-server", except-features = [
+    "format",
+  ] },
+  "biome",
+  "cspell"
+
+]
+formatter = { command = "biome", args = [
+  "format",
+  "--stdin-file-path",
+  "a.jsx",
+] }
+
+[[language]]
+name = "typescript"
+language-id = "typescript"
+scope = "source.ts"
+injection-regex = "^(ts|typescript)$"
+file-types = ["ts"]
+shebangs = ["deno", "node"]
+roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+auto-format = true
+language-servers = [
+  { name = "deno-lsp", except-features = [
+    "format",
+  ] },
+  { name = "typescript-language-server", except-features = [
+    "format",
+  ] },
+  "biome",
+  "cspell"
+
+ ]
+formatter = { command = "biome", args = [
+  "format",
+  "--stdin-file-path",
+  "a.ts",
+] }
+
+[[language]]
+name = "tsx"
+language-id = "typescriptreact"
+scope = "source.tsx"
+injection-regex = "^(tsx)$"
+file-types = ["tsx"]
+shebangs = ["deno", "node"]
+roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+auto-format = true
+language-servers = [
+  { name = "deno-lsp", except-features = [
+    "format",
+  ] },
+  { name = "typescript-language-server", except-features = [
+    "format",
+  ] },
+  "biome",
+  "cspell"
+
+]
+formatter = { command = "biome", args = [
+  "format",
+  "--stdin-file-path",
+  "a.tsx",
+] }
 
 [[language]]
 name = "json"
