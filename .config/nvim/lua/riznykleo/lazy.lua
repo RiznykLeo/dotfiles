@@ -45,12 +45,6 @@ local plugins = {
 	"tpope/vim-commentary",
 	"tpope/vim-surround",
 
-	{
-		"m4xshen/hardtime.nvim",
-		dependencies = { "MunifTanjim/nui.nvim" },
-		opts = {},
-	}, -- to disable ":Hardtime disable" or ":Hardtime toggle"
-
 	-- GO
 	{
 		"leoluz/nvim-dap-go",
