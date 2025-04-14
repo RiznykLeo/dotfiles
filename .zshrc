@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/Users/riznykleo/.zsh/completions:"* ]]; then export FPATH="/Users/riznykleo/.zsh/completions:$FPATH"; fi
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 export COLORTERM=truecolor
@@ -139,4 +141,8 @@ if is_macos; then
 elif is_linux; then
   [ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
+
+
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
 
