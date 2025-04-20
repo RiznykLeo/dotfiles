@@ -1,13 +1,20 @@
-theme = "ayu_mirage"
+theme = "everforest_light"
 # Themes i like
 #
-# ayu_mirage
+# ayu_mirage *
 # snazzy
 # bogster
 # amberwood
 # ayu-evolve (darker contrast)
 # ayu-dark
 # doom_acario_dark (colder)
+#
+# Light
+# adwaita-light (good for outdoors, very white)
+# catpuccin_latte (more blueish)
+# everforest_light (feels like summer, a bit yellower)
+# kaolin-light (feels more paper-like)
+# seoul-light-soft (even more grayish and soft, paper-like)
 
 [editor]
 mouse=false
