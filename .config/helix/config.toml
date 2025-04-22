@@ -30,15 +30,17 @@ auto-signature-help = true
 display-inlay-hints = false
 
 [editor.auto-save]
+# NOTE: doesn't work with autosafe + autoformat
 after-delay.enable = true
-after-delay.timeout = 1000 
+after-delay.timeout = 1000
 
 [editor.indent-guides]
 render = true
 character = "0"
 
 [keys.normal]
-esc = ["collapse_selection", "keep_primary_selection"]
+# NOTE: some commands have ":w" to fight issue with autosave+autoformat
+esc = ["collapse_selection",":w", "keep_primary_selection"]
 ";" = "command_mode"
 C-g = [
     ":write-all",
@@ -48,9 +50,7 @@ C-g = [
     ":redraw",
     ":reload-all"
 ]
-
 # NOTE: this copies into clipboard
- 
 y = "yank_main_selection_to_clipboard"
 p = "paste_clipboard_before"
 c = ["yank_to_clipboard", "change_selection_noyank"]
@@ -64,4 +64,11 @@ q=":quit"
 [editor.cursor-shape]
 insert="bar"
 select="underline"
+
+[keys.select]
+"esc" = ["collapse_selection", "normal_mode", ":w"]
+
+[keys.insert]
+"esc" = ["normal_mode", ":w"]
+
 
