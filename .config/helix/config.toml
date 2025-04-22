@@ -41,6 +41,10 @@ C-g = [
     ":redraw",
     ":reload-all"
 ]
+y = "yank_main_selection_to_clipboard"
+p = "paste_clipboard_before"
+c = ["yank_to_clipboard", "change_selection_noyank"]
+d = ["yank_to_clipboard", "delete_selection_noyank"]
 
 [keys.normal.space]
 w=":write"
@@ -50,3 +54,4 @@ q=":quit"
 [editor.cursor-shape]
 insert="bar"
 select="underline"
+
