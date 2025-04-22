@@ -30,6 +30,12 @@ display-messages = true
 auto-signature-help = true
 display-inlay-hints = false
 
+[editor.auto-save]
+after-delay.enable = true
+after-delay.timeout = 1000 
+
+# NOTE: if autosafe wn't work properly, i can add ":w" to esc commands, to save on escape
+ 
 [keys.normal]
 esc = ["collapse_selection", "keep_primary_selection"]
 ";" = "command_mode"
