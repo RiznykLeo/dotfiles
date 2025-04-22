@@ -66,9 +66,9 @@ insert="bar"
 select="underline"
 
 [keys.select]
-"esc" = ["collapse_selection", "normal_mode", ":w"]
+esc = ["collapse_selection", "normal_mode", ":w"]
 
 [keys.insert]
-"esc" = ["normal_mode", ":w"]
+esc = ["normal_mode", ":w"]
 
 
