@@ -38,32 +38,20 @@ after-delay.timeout = 1000
 render = true
 character = "0"
 
+[editor.cursor-shape]
+insert="bar"
+select="underline"
+
 [keys.normal]
 # NOTE: some commands have ":w" to fight issue with autosave+autoformat
 esc = ["collapse_selection",":w", "keep_primary_selection"]
 ";" = "command_mode"
-C-g = [
-    ":write-all",
-    ":new",
-    ":insert-output lazygit",
-    ":buffer-close!",
-    ":redraw",
-    ":reload-all"
-]
-# NOTE: this copies into clipboard
-y = "yank_main_selection_to_clipboard"
-p = "paste_clipboard_before"
-c = ["yank_to_clipboard", "change_selection_noyank"]
-d = ["yank_to_clipboard", "delete_selection_noyank"]
+"A-j" = ["extend_to_line_bounds", "delete_selection", "paste_after"]  # Move line(s) down
+"A-k" = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]  # Move line(s) up
 
 [keys.normal.space]
 w=":write"
 q=":quit"
-
-
-[editor.cursor-shape]
-insert="bar"
-select="underline"
 
 [keys.select]
 esc = ["collapse_selection", "normal_mode", ":w"]
