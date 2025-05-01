@@ -41,3 +41,8 @@ install spellchecker and ensure it's in PATH
 ```
 $ npm/pnpm/bun i -g @vlabo/cspell-lsp
 ```
+
+install ccase for case converions
+```bash
+cargo install ccase
+```
