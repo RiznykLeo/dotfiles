@@ -3,130 +3,274 @@ emmet-lsp = {command = "emmet-langugage-server", args = ["--stdio"]}
 cspell = {command = "cspell-lsp", args = ["--stdio"]}
 
 [language-server.biome]
-args = ["lsp-proxy"]
+args = ["lsp-proxy", "--config-path", "./biome.jsonc"]
 command = "biome"
+required-root-patterns = ["biome.json", "biome.jsonc"]
 
-[language-server.deno-lsp]
-args = ["lsp"]
-command = "deno"
-required-root-patterns = ["deno.*"]
+[language-server.eslint]
+command = "vscode-eslint-language-server"
+args = ["--stdio"]
+required-root-patterns = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml"]
 
-[language-server.deno-lsp.config.deno]
-enable = true
-suggest = { completeFunctionCalls = true, imports = { hosts = { "https://deno.land" = true } } }
+[language-server.prettier]
+command = "prettier"
+args = ["--parser", "typescript"]
+required-root-patterns = [".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
 
 [language-server.typescript-language-server]
 required-root-patterns = ["package.json", "tsconfig.json"]
 
+[language-server.typescript-language-server.config]
+hostInfo = "helix"
+
+# JavaScript with Biome
 [[language]]
 name = "javascript"
 language-id = "javascript"
 scope = "source.js"
 injection-regex = "^(js|javascript)$"
 file-types = ["js"]
-shebangs = ["deno", "node"]
-roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+shebangs = ["node"]
+roots = ["biome.json", "biome.jsonc"]
 auto-format = true
 language-servers = [
-  { name = "deno-lsp", except-features = [
-    "format",
-  ] },
-  { name = "typescript-language-server", except-features = [
-    "format",
-  ] },
-  "biome",
+  { name = "typescript-language-server", except-features = ["format"] },
+  { name = "biome", only-features = ["format", "diagnostics"] },
   "cspell"
 ]
-formatter = { command = "biome", args = [
-  "format",
-  "--stdin-file-path",
-  "a.js",
-] }
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.js"] }
 
+# JavaScript with ESLint/Prettier
+[[language]]
+name = "javascript"
+language-id = "javascript"
+scope = "source.js"
+injection-regex = "^(js|javascript)$"
+file-types = ["js"]
+shebangs = ["node"]
+roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
+auto-format = true
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  { name = "eslint", only-features = ["diagnostics"] },
+  { name = "prettier", only-features = ["format"] },
+  "cspell"
+]
+formatter = { command = "prettier", args = ["--stdin-filepath", "a.js"] }
+
+# Default JavaScript (without specific linter configuration files)
+[[language]]
+name = "javascript"
+language-id = "javascript"
+scope = "source.js"
+injection-regex = "^(js|javascript)$"
+file-types = ["js"]
+shebangs = ["node"]
+roots = ["package.json", "tsconfig.json"]
+auto-format = true
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  "cspell"
+]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.js"] }
+
+# JSX with Biome
 [[language]]
 name = "jsx"
 language-id = "javascriptreact"
 scope = "source.jsx"
 injection-regex = "^(jsx)$"
 file-types = ["jsx"]
-shebangs = ["deno", "node"]
-roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+shebangs = ["node"]
+roots = ["biome.json", "biome.jsonc"]
 auto-format = true
 language-servers = [
-  { name = "deno-lsp", except-features = [
-    "format",
-  ] },
-  { name = "typescript-language-server", except-features = [
-    "format",
-  ] },
-  "biome",
+  { name = "typescript-language-server", except-features = ["format"] },
+  { name = "biome", only-features = ["format", "diagnostics"] },
   "cspell"
-
 ]
-formatter = { command = "biome", args = [
-  "format",
-  "--stdin-file-path",
-  "a.jsx",
-] }
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.jsx"] }
 
+# JSX with ESLint/Prettier
+[[language]]
+name = "jsx"
+language-id = "javascriptreact"
+scope = "source.jsx"
+injection-regex = "^(jsx)$"
+file-types = ["jsx"]
+shebangs = ["node"]
+roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
+auto-format = true
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  { name = "eslint", only-features = ["diagnostics"] },
+  { name = "prettier", only-features = ["format"] },
+  "cspell"
+]
+formatter = { command = "prettier", args = ["--stdin-filepath", "a.jsx"] }
+
+# Default JSX (without specific linter configuration files)
+[[language]]
+name = "jsx"
+language-id = "javascriptreact"
+scope = "source.jsx"
+injection-regex = "^(jsx)$"
+file-types = ["jsx"]
+shebangs = ["node"]
+roots = ["package.json", "tsconfig.json"]
+auto-format = true
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  "cspell"
+]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.jsx"] }
+
+# TypeScript with Biome
 [[language]]
 name = "typescript"
 language-id = "typescript"
 scope = "source.ts"
 injection-regex = "^(ts|typescript)$"
 file-types = ["ts"]
-shebangs = ["deno", "node"]
-roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+shebangs = ["node"]
+roots = ["biome.json", "biome.jsonc"]
 auto-format = true
 language-servers = [
-  { name = "deno-lsp", except-features = [
-    "format",
-  ] },
-  { name = "typescript-language-server", except-features = [
-    "format",
-  ] },
-  "biome",
+  { name = "typescript-language-server", except-features = ["format"] },
+  { name = "biome", only-features = ["format", "diagnostics"] },
   "cspell"
+]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
 
- ]
-formatter = { command = "biome", args = [
-  "format",
-  "--stdin-file-path",
-  "a.ts",
-] }
+# TypeScript with ESLint/Prettier
+[[language]]
+name = "typescript"
+language-id = "typescript"
+scope = "source.ts"
+injection-regex = "^(ts|typescript)$"
+file-types = ["ts"]
+shebangs = ["node"]
+roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
+auto-format = true
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  { name = "eslint", only-features = ["diagnostics"] },
+  { name = "prettier", only-features = ["format"] },
+  "cspell"
+]
+formatter = { command = "prettier", args = ["--stdin-filepath", "a.ts"] }
 
+# Default TypeScript (without specific linter configuration files)
+[[language]]
+name = "typescript"
+language-id = "typescript"
+scope = "source.ts"
+injection-regex = "^(ts|typescript)$"
+file-types = ["ts"]
+shebangs = ["node"]
+roots = ["package.json", "tsconfig.json"]
+auto-format = true
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  "cspell"
+]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
+
+# TSX with Biome
 [[language]]
 name = "tsx"
 language-id = "typescriptreact"
 scope = "source.tsx"
 injection-regex = "^(tsx)$"
 file-types = ["tsx"]
-shebangs = ["deno", "node"]
-roots = ["deno.json", "deno.jsonc", "package.json", "tsconfig.json"]
+shebangs = ["node"]
+roots = ["biome.json", "biome.jsonc"]
 auto-format = true
 language-servers = [
-  { name = "deno-lsp", except-features = [
-    "format",
-  ] },
-  { name = "typescript-language-server", except-features = [
-    "format",
-  ] },
-  "biome",
+  { name = "typescript-language-server", except-features = ["format"] },
+  { name = "biome", only-features = ["format", "diagnostics"] },
   "cspell"
-
 ]
-formatter = { command = "biome", args = [
-  "format",
-  "--stdin-file-path",
-  "a.tsx",
-] }
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.tsx"] }
 
+# TSX with ESLint/Prettier
+[[language]]
+name = "tsx"
+language-id = "typescriptreact"
+scope = "source.tsx"
+injection-regex = "^(tsx)$"
+file-types = ["tsx"]
+shebangs = ["node"]
+roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
+auto-format = true
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  { name = "eslint", only-features = ["diagnostics"] },
+  { name = "prettier", only-features = ["format"] },
+  "cspell"
+]
+formatter = { command = "prettier", args = ["--stdin-filepath", "a.tsx"] }
+
+# Default TSX (without specific linter configuration files)
+[[language]]
+name = "tsx"
+language-id = "typescriptreact"
+scope = "source.tsx"
+injection-regex = "^(tsx)$"
+file-types = ["tsx"]
+shebangs = ["node"]
+roots = ["package.json", "tsconfig.json"]
+auto-format = true
+language-servers = [
+  { name = "typescript-language-server", except-features = ["format"] },
+  "cspell"
+]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.tsx"] }
+
+# JSON with Biome
 [[language]]
 name = "json"
-language-servers = [ { name = "vscode-json-language-server", except-features = [ "format" ] }, "biome", "cspell" ]
-formatter = { command = "bunx", args = ["biome","format", "--stdin-file-path", "file.json"] }
+language-id = "json"
+scope = "source.json"
+file-types = ["json"]
+roots = ["biome.json", "biome.jsonc"]
+language-servers = [
+  { name = "vscode-json-language-server", except-features = ["format"] },
+  { name = "biome", only-features = ["format", "diagnostics"] },
+  "cspell"
+]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.json"] }
+
+# JSON with Prettier
+[[language]]
+name = "json"
+language-id = "json"
+scope = "source.json"
+file-types = ["json"]
+roots = [".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
+language-servers = [
+  { name = "vscode-json-language-server", except-features = ["format"] },
+  { name = "prettier", only-features = ["format"] },
+  "cspell"
+]
+formatter = { command = "prettier", args = ["--stdin-filepath", "file.json"] }
+
+# Default JSON
+[[language]]
+name = "json"
+language-id = "json"
+scope = "source.json"
+file-types = ["json"]
+roots = ["package.json", "tsconfig.json"]
+language-servers = [
+  { name = "vscode-json-language-server", except-features = ["format"] },
+  "cspell"
+]
+formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.json"] }
 
 [[language]]
-name="markdown"
+name = "markdown"
+language-id = "markdown"
+scope = "source.md"
+file-types = ["md", "markdown"]
 language-servers = ["cspell"]
-
