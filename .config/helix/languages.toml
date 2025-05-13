@@ -17,11 +17,9 @@ command = "prettier"
 args = ["--parser", "typescript"]
 required-root-patterns = [".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", "prettier.config.js"]
 
-[language-server.typescript-language-server]
-required-root-patterns = ["package.json", "tsconfig.json"]
-
-[language-server.typescript-language-server.config]
-hostInfo = "helix"
+[language-server.tailwindcss]
+command = "tailwindcss-language-server"
+args = ["--stdio"]
 
 # JavaScript with Biome
 [[language]]
@@ -57,6 +55,7 @@ auto-format = true
 language-servers = [
   { name = "typescript-language-server", except-features = ["format"] },
   { name = "biome", only-features = ["format", "diagnostics"] },
+  { name = "tailwindcss" },
   "cspell"
 ]
 formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.jsx"] }
@@ -68,6 +67,7 @@ roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslin
 auto-format = true
 language-servers = [
   { name = "typescript-language-server", except-features = ["format"] },
+  { name = "tailwindcss" },
   { name = "eslint", only-features = ["diagnostics"] },
   { name = "prettier", only-features = ["format"] },
   "cspell"
@@ -106,6 +106,7 @@ roots = ["biome.json", "biome.jsonc"]
 auto-format = true
 language-servers = [
   { name = "typescript-language-server", except-features = ["format"] },
+  { name = "tailwindcss" },
   { name = "biome", only-features = ["format", "diagnostics"] },
   "cspell"
 ]
@@ -118,6 +119,7 @@ roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslin
 auto-format = true
 language-servers = [
   { name = "typescript-language-server", except-features = ["format"] },
+  { name = "tailwindcss" },
   { name = "eslint", only-features = ["diagnostics"] },
   { name = "prettier", only-features = ["format"] },
   "cspell"
@@ -146,15 +148,15 @@ language-servers = [
 ]
 formatter = { command = "prettier", args = ["--stdin-filepath", "file.json"] }
 
-# Default JSON
-[[language]]
-name = "json"
-roots = ["package.json", "tsconfig.json"]
-language-servers = [
-  { name = "vscode-json-language-server", except-features = ["format"] },
-  "cspell"
-]
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.json"] }
+# # Default JSON
+# [[language]]
+# name = "json"
+# roots = ["package.json", "tsconfig.json"]
+# language-servers = [
+#   { name = "vscode-json-language-server", except-features = ["format"] },
+#   "cspell"
+# ]
+# formatter = { command = "biome", args = ["format", "--stdin-file-path", "file.json"] }
 
 [[language]]
 name = "markdown"
