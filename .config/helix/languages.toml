@@ -15,7 +15,7 @@ required-root-patterns = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslin
 [language-server.prettier]
 command = "prettier"
 args = ["--parser", "typescript"]
-required-root-patterns = [".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
+required-root-patterns = [".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", "prettier.config.js"]
 
 [language-server.typescript-language-server]
 required-root-patterns = ["package.json", "tsconfig.json"]
@@ -48,7 +48,7 @@ scope = "source.js"
 injection-regex = "^(js|javascript)$"
 file-types = ["js"]
 shebangs = ["node"]
-roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
+roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", "prettier.config.js"]
 auto-format = true
 language-servers = [
   { name = "typescript-language-server", except-features = ["format"] },
@@ -56,23 +56,8 @@ language-servers = [
   { name = "prettier", only-features = ["format"] },
   "cspell"
 ]
-formatter = { command = "prettier", args = ["--stdin-filepath", "a.js"] }
+formatter = { command = "prettier", args = ["--stdin-filepath", "file.js"] }
 
-# Default JavaScript (without specific linter configuration files)
-[[language]]
-name = "javascript"
-language-id = "javascript"
-scope = "source.js"
-injection-regex = "^(js|javascript)$"
-file-types = ["js"]
-shebangs = ["node"]
-roots = ["package.json", "tsconfig.json"]
-auto-format = true
-language-servers = [
-  { name = "typescript-language-server", except-features = ["format"] },
-  "cspell"
-]
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.js"] }
 
 # JSX with Biome
 [[language]]
@@ -99,7 +84,7 @@ scope = "source.jsx"
 injection-regex = "^(jsx)$"
 file-types = ["jsx"]
 shebangs = ["node"]
-roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
+roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", "prettier.config.js"]
 auto-format = true
 language-servers = [
   { name = "typescript-language-server", except-features = ["format"] },
@@ -107,23 +92,7 @@ language-servers = [
   { name = "prettier", only-features = ["format"] },
   "cspell"
 ]
-formatter = { command = "prettier", args = ["--stdin-filepath", "a.jsx"] }
-
-# Default JSX (without specific linter configuration files)
-[[language]]
-name = "jsx"
-language-id = "javascriptreact"
-scope = "source.jsx"
-injection-regex = "^(jsx)$"
-file-types = ["jsx"]
-shebangs = ["node"]
-roots = ["package.json", "tsconfig.json"]
-auto-format = true
-language-servers = [
-  { name = "typescript-language-server", except-features = ["format"] },
-  "cspell"
-]
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.jsx"] }
+formatter = { command = "prettier", args = ["--stdin-filepath", "file.jsx"] }
 
 # TypeScript with Biome
 [[language]]
@@ -150,7 +119,7 @@ scope = "source.ts"
 injection-regex = "^(ts|typescript)$"
 file-types = ["ts"]
 shebangs = ["node"]
-roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
+roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", "prettier.config.js"]
 auto-format = true
 language-servers = [
   { name = "typescript-language-server", except-features = ["format"] },
@@ -158,23 +127,7 @@ language-servers = [
   { name = "prettier", only-features = ["format"] },
   "cspell"
 ]
-formatter = { command = "prettier", args = ["--stdin-filepath", "a.ts"] }
-
-# Default TypeScript (without specific linter configuration files)
-[[language]]
-name = "typescript"
-language-id = "typescript"
-scope = "source.ts"
-injection-regex = "^(ts|typescript)$"
-file-types = ["ts"]
-shebangs = ["node"]
-roots = ["package.json", "tsconfig.json"]
-auto-format = true
-language-servers = [
-  { name = "typescript-language-server", except-features = ["format"] },
-  "cspell"
-]
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.ts"] }
+formatter = { command = "prettier", args = ["--stdin-filepath", "file.ts"] }
 
 # TSX with Biome
 [[language]]
@@ -201,7 +154,7 @@ scope = "source.tsx"
 injection-regex = "^(tsx)$"
 file-types = ["tsx"]
 shebangs = ["node"]
-roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
+roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", "prettier.config.js"]
 auto-format = true
 language-servers = [
   { name = "typescript-language-server", except-features = ["format"] },
@@ -209,23 +162,7 @@ language-servers = [
   { name = "prettier", only-features = ["format"] },
   "cspell"
 ]
-formatter = { command = "prettier", args = ["--stdin-filepath", "a.tsx"] }
-
-# Default TSX (without specific linter configuration files)
-[[language]]
-name = "tsx"
-language-id = "typescriptreact"
-scope = "source.tsx"
-injection-regex = "^(tsx)$"
-file-types = ["tsx"]
-shebangs = ["node"]
-roots = ["package.json", "tsconfig.json"]
-auto-format = true
-language-servers = [
-  { name = "typescript-language-server", except-features = ["format"] },
-  "cspell"
-]
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.tsx"] }
+formatter = { command = "prettier", args = ["--stdin-filepath", "file.tsx"] }
 
 # JSON with Biome
 [[language]]
@@ -247,7 +184,7 @@ name = "json"
 language-id = "json"
 scope = "source.json"
 file-types = ["json"]
-roots = [".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml"]
+roots = [".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", "prettier.config.js"]
 language-servers = [
   { name = "vscode-json-language-server", except-features = ["format"] },
   { name = "prettier", only-features = ["format"] },
