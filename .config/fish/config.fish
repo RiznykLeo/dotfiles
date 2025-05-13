@@ -25,6 +25,12 @@ if status is-interactive
     set -x GOPATH "$HOME/go"
     set -x PATH "$GOPATH/bin" $PATH
 
+    # PNPM
+    set -x PNPM_HOME /Users/riznykleo/Library/pnpm
+    if not contains -- "$PNPM_HOME" $PATH
+        set -gx PATH "$PNPM_HOME" $PATH
+    end
+
     # Initialize Homebrew
     eval (/opt/homebrew/bin/brew shellenv)
 
