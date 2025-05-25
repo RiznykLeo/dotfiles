@@ -46,34 +46,6 @@ language-servers = [
 ]
 formatter = { command = "prettier", args = ["--stdin-filepath", "file.js"] }
 
-
-# JSX with Biome
-[[language]]
-name = "jsx"
-roots = ["biome.json", "biome.jsonc"]
-auto-format = true
-language-servers = [
-  { name = "typescript-language-server", except-features = ["format"] },
-  { name = "biome", only-features = ["format", "diagnostics"] },
-  { name = "tailwindcss" },
-  "cspell"
-]
-formatter = { command = "biome", args = ["format", "--stdin-file-path", "a.jsx"] }
-
-# JSX with ESLint/Prettier
-[[language]]
-name = "jsx"
-roots = [".eslintrc", ".eslintrc.js", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml", ".prettierrc", ".prettierrc.js", ".prettierrc.json", ".prettierrc.yml", ".prettierrc.yaml", "prettier.config.js"]
-auto-format = true
-language-servers = [
-  { name = "typescript-language-server", except-features = ["format"] },
-  { name = "tailwindcss" },
-  { name = "eslint", only-features = ["diagnostics"] },
-  { name = "prettier", only-features = ["format"] },
-  "cspell"
-]
-formatter = { command = "prettier", args = ["--stdin-filepath", "file.jsx"] }
-
 # TypeScript with Biome
 [[language]]
 name = "typescript"
