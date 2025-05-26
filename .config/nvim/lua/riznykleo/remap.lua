@@ -31,29 +31,12 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
--- Remap for Enter key
-vim.api.nvim_set_keymap("n", "<C-j>", "<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("i", "<C-j>", "<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<C-j>", "<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>w", "<cmd>w<CR>")
+vim.keymap.set("n", "<leader>q", "<cmd>q<CR>")
 
-vim.keymap.set("n", "<leader><leader>", function()
-	vim.cmd("so")
-end)
+vim.keymap.set("n", "gh", "0", { desc = "Go to beginning of line" })
+vim.keymap.set("n", "gl", "$", { desc = "Go to end of line" })
+vim.keymap.set("v", "gh", "0", { desc = "Go to beginning of line" })
+vim.keymap.set("v", "gl", "$", { desc = "Go to end of line" })
 
--- DAP
--- vim.keymap.set("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>", { silent = true })
--- vim.keymap.set("n", "<leader>dui", function()
--- 	local widgets = require("dap.ui.widgets")
--- 	local sidebar = widgets.sidebar(widgets.scopes)
--- 	sidebar.open()
--- end)
-
--- -- DAP GO
-
--- vim.keymap.set("n", "<leader>dgt", function()
--- 	require("dap-go").debug_test()
--- end)
-
--- vim.keymap.set("n", "<leader>dgl", function()
--- 	require("dap-go").debug_last()
--- end)
+vim.keymap.set({ "n", "v" }, "ge", "G", { desc = "Go to end of file" })

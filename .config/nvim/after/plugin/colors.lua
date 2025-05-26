@@ -1,8 +1,8 @@
 function Colors(color)
 	-- Mac
-	-- color = color or "rose-pine"
+	color = color or "rose-pine"
 	--Windows
-	color = color or "mrkn256"
+	-- color = color or "mrkn256"
 	vim.cmd.colorscheme(color)
 end
 
