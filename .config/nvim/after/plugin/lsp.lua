@@ -23,6 +23,10 @@ nvim_lsp.ts_ls.setup({
 	single_file_support = false,
 })
 
+nvim_lsp.biome.setup({
+	autostart = false, -- Don't start automatically
+})
+
 lsp.set_preferences({
 	suggest_lsp_servers = true,
 	sign_icons = {
