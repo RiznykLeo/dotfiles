@@ -17,10 +17,33 @@ require("mason-lspconfig").setup({
 })
 
 local nvim_lsp = require("lspconfig")
+
 nvim_lsp.ts_ls.setup({
-	on_attach = on_attach,
 	root_dir = nvim_lsp.util.root_pattern("package.json"),
 	single_file_support = false,
+})
+
+nvim_lsp.eslint.setup({
+	settings = {
+		workingDirectory = { mode = "auto" }, -- Auto-detect project root
+	},
+	root_dir = nvim_lsp.util.root_pattern(
+		".eslintrc",
+		".eslintrc.js",
+		".eslintrc.json",
+		".eslintrc.yaml",
+		".eslintrc.yml",
+		"eslint.config.js",
+		"package.json"
+	),
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"javascript.jsx",
+		"typescript",
+		"typescriptreact",
+		"typescript.tsx",
+	},
 })
 
 nvim_lsp.biome.setup({
