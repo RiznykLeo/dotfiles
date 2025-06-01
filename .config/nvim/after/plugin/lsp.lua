@@ -54,8 +54,29 @@ nvim_lsp.eslint.setup({
 	filetypes = js_ts_filetypes,
 })
 
+-- Utility function to detect Biome config
+local function has_biome_config()
+	local biome_configs = {
+		"biome.json",
+		"biome.jsonc",
+	}
+
+	local current_dir = vim.fn.getcwd()
+	for _, config in ipairs(biome_configs) do
+		if vim.fn.filereadable(current_dir .. "/" .. config) == 1 then
+			return true
+		end
+	end
+	return false
+end
+
+-- Biome setup - only enabled when a biome config is found
 nvim_lsp.biome.setup({
-	autostart = false,
+	autostart = function()
+		return has_biome_config()
+	end,
+	root_dir = nvim_lsp.util.root_pattern("biome.json", "biome.jsonc"),
+	filetypes = js_ts_filetypes,
 })
 
 nvim_lsp.relay_lsp.setup({
@@ -133,10 +154,51 @@ vim.api.nvim_create_autocmd("CursorHold", {
 
 vim.opt.updatetime = 300
 
--- ESLint autofix on save
+-- Function to check if a file exists
+local function file_exists(filename)
+	local stat = vim.loop.fs_stat(filename)
+	return stat and stat.type == "file"
+end
+
+-- Detect ESLint config
+local function has_eslint_config()
+	local eslint_configs = {
+		".eslintrc",
+		".eslintrc.js",
+		".eslintrc.json",
+		".eslintrc.yaml",
+		".eslintrc.yml",
+		"eslint.config.js",
+	}
+
+	local current_dir = vim.fn.getcwd()
+	for _, config in ipairs(eslint_configs) do
+		if file_exists(current_dir .. "/" .. config) then
+			return true
+		end
+	end
+	
+	-- Check for package.json with eslint config
+	local package_json = current_dir .. "/package.json"
+	if file_exists(package_json) then
+		local content = vim.fn.readfile(package_json)
+		local json_str = table.concat(content, "\n")
+		if json_str:find('"eslintConfig"') then
+			return true
+		end
+	end
+	
+	return false
+end
+
+-- ESLint autofix on save - only when ESLint config exists and not using Biome
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = js_ts_filetypes,
-	callback = function()
-		vim.cmd("EslintFixAll")
+	callback = function(args)
+		-- Only run ESLint if we have an ESLint config and not a Biome config
+		if has_eslint_config() and not has_biome_config() then
+			vim.cmd("EslintFixAll")
+		end
+		-- Biome formatting is handled by conform.nvim
 	end,
 })
