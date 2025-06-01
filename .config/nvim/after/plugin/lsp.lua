@@ -86,15 +86,14 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "gd", vim.lsp.buf.definition, keymap_opts("Go to definition"))
 	vim.keymap.set("n", "K", vim.lsp.buf.hover, keymap_opts("Show hover information"))
 	vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, keymap_opts("Search workspace symbols"))
-	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, keymap_opts("Go to previous diagnostic"))
-	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, keymap_opts("Go to next diagnostic"))
 	vim.keymap.set({ "n", "v" }, "<leader>vca", vim.lsp.buf.code_action, keymap_opts("Show code actions"))
 	vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, keymap_opts("Show references"))
 	vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, keymap_opts("Rename symbol"))
 	vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, keymap_opts("Show signature help"))
 
+	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, keymap_opts("Go to previous diagnostic"))
+	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, keymap_opts("Go to next diagnostic"))
 	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, keymap_opts("Show line diagnostics"))
-	vim.keymap.set("n", "<leader>n", vim.diagnostic.goto_next, keymap_opts("Go to next diagnostic"))
 	vim.keymap.set("n", "<leader>dq", vim.diagnostic.setqflist, keymap_opts("Open diagnostics quickfix (project)"))
 	vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, keymap_opts("Open diagnostics loclist (buffer)"))
 end)
@@ -135,18 +134,9 @@ vim.api.nvim_create_autocmd("CursorHold", {
 vim.opt.updatetime = 300
 
 -- ESLint autofix on save
-local eslint_group = vim.api.nvim_create_augroup("ESLintAutofix", { clear = true })
 vim.api.nvim_create_autocmd("BufWritePre", {
-	group = eslint_group,
 	pattern = js_ts_filetypes,
-	callback = function(args)
-		local clients = vim.lsp.get_active_clients({ bufnr = args.buf })
-		for _, client in ipairs(clients) do
-			if client.name == "eslint" then
-				vim.cmd("EslintFixAll")
-				return
-			end
-		end
+	callback = function()
+		vim.cmd("EslintFixAll")
 	end,
-	desc = "Run ESLint autofix before saving",
 })
