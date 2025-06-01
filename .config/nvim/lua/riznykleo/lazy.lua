@@ -45,6 +45,20 @@ local plugins = {
 			require("gitsigns").setup()
 		end,
 	},
+	{
+		"echasnovski/mini.pairs",
+		version = false,
+		config = function()
+			require("mini.pairs").setup()
+		end,
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		dependencies = "nvim-treesitter/nvim-treesitter",
+		config = function()
+			require("nvim-ts-autotag").setup()
+		end,
+	},
 
 	"tpope/vim-fugitive",
 	"tpope/vim-commentary",
