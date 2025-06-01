@@ -37,7 +37,6 @@ local plugins = {
 	{ "mfussenegger/nvim-dap" },
 	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", lazy = true } },
 	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
-	{ "kevinhwang91/nvim-ufo", dependencies = { "kevinhwang91/promise-async" } }, --folds
 	"ThePrimeagen/harpoon",
 	"lambdalisue/suda.vim",
 	"HiPhish/rainbow-delimiters.nvim",
