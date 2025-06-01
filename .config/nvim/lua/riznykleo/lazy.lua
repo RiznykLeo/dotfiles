@@ -34,15 +34,19 @@ local plugins = {
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	{ "stevearc/conform.nvim", opts = {} },
 	{ "stevearc/oil.nvim", opts = {} },
-	{ "mfussenegger/nvim-dap" },
+
 	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", lazy = true } },
 	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
+	"HiPhish/rainbow-delimiters.nvim",
+
 	"ThePrimeagen/harpoon",
 	"lambdalisue/suda.vim",
-	"HiPhish/rainbow-delimiters.nvim",
+
 	"tpope/vim-fugitive",
 	"tpope/vim-commentary",
 	"tpope/vim-surround",
+
+	{ "mfussenegger/nvim-dap" },
 
 	-- THEMES
 	{ "rose-pine/neovim", name = "rose-pine" },

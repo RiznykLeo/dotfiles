@@ -1,9 +1,23 @@
 local lsp = require("lsp-zero")
 
-lsp.on_attach(function(client, bufnr)
-	lsp.default_keymaps({ buffer = bufnr })
-end)
+local js_ts_filetypes = {
+	"javascript",
+	"javascriptreact",
+	"javascript.jsx",
+	"typescript",
+	"typescriptreact",
+	"typescript.tsx",
+}
 
+local diagnostic_float_opts = {
+	focusable = false,
+	close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+	border = "rounded",
+	source = "always",
+	prefix = "",
+}
+
+-- Mason
 require("mason").setup({})
 require("mason-lspconfig").setup({
 	ensure_installed = { "ts_ls", "eslint@4.8.0" },
@@ -16,6 +30,7 @@ require("mason-lspconfig").setup({
 	},
 })
 
+-- LSPs
 local nvim_lsp = require("lspconfig")
 
 nvim_lsp.ts_ls.setup({
@@ -25,7 +40,7 @@ nvim_lsp.ts_ls.setup({
 
 nvim_lsp.eslint.setup({
 	settings = {
-		workingDirectory = { mode = "auto" }, -- Auto-detect project root
+		workingDirectory = { mode = "auto" },
 	},
 	root_dir = nvim_lsp.util.root_pattern(
 		".eslintrc",
@@ -36,41 +51,21 @@ nvim_lsp.eslint.setup({
 		"eslint.config.js",
 		"package.json"
 	),
-	filetypes = {
-		"javascript",
-		"javascriptreact",
-		"javascript.jsx",
-		"typescript",
-		"typescriptreact",
-		"typescript.tsx",
-	},
+	filetypes = js_ts_filetypes,
 })
 
 nvim_lsp.biome.setup({
-	autostart = false, -- Don't start automatically
+	autostart = false,
 })
 
--- Relay LSP
--- NOTE: install relay compiler globally to work
 nvim_lsp.relay_lsp.setup({
-	-- (default: false) Whether or not we should automatically start the
-	-- Relay Compiler in watch mode when you open a project
 	auto_start_compiler = false,
-	-- (default: nil) Path to a relay config relative to the `root_dir`.
-	-- Without this, the compiler will search for your config. This is
-	-- helpful if your relay project is in a nested directory.
 	path_to_config = nil,
 	root_dir = nvim_lsp.util.root_pattern("relay.config.*", "package.json"),
-	filetypes = {
-		"javascript",
-		"javascriptreact",
-		"javascript.jsx",
-		"typescript",
-		"typescriptreact",
-		"typescript.tsx",
-	},
+	filetypes = js_ts_filetypes,
 })
 
+-- LSP preferences
 lsp.set_preferences({
 	suggest_lsp_servers = true,
 	sign_icons = {
@@ -82,44 +77,76 @@ lsp.set_preferences({
 })
 
 lsp.on_attach(function(client, bufnr)
-	local opts = { buffer = bufnr, remap = false }
+	lsp.default_keymaps({ buffer = bufnr })
 
-	vim.keymap.set("n", "gd", function()
-		vim.lsp.buf.definition()
-	end, opts)
-	vim.keymap.set("n", "K", function()
-		vim.lsp.buf.hover()
-	end, opts)
-	vim.keymap.set("n", "<leader>vws", function()
-		vim.lsp.buf.workspace_symbol()
-	end, opts)
-	vim.keymap.set("n", "[d", function()
-		vim.diagnostic.goto_next()
-	end, opts)
-	vim.keymap.set("n", "]d", function()
-		vim.diagnostic.goto_prev()
-	end, opts)
-	vim.keymap.set({ "n", "v" }, "<leader>vca", function()
-		vim.lsp.buf.code_action()
-	end, opts)
-	vim.keymap.set("n", "<leader>vrr", function()
-		vim.lsp.buf.references()
-	end, opts)
-	vim.keymap.set("n", "<leader>vrn", function()
-		vim.lsp.buf.rename()
-	end, opts)
-	vim.keymap.set("i", "<C-h>", function()
-		vim.lsp.buf.signature_help()
-	end, opts)
+	local function keymap_opts(desc)
+		return { buffer = bufnr, remap = false, desc = desc }
+	end
+
+	vim.keymap.set("n", "gd", vim.lsp.buf.definition, keymap_opts("Go to definition"))
+	vim.keymap.set("n", "K", vim.lsp.buf.hover, keymap_opts("Show hover information"))
+	vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, keymap_opts("Search workspace symbols"))
+	vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, keymap_opts("Go to previous diagnostic"))
+	vim.keymap.set("n", "]d", vim.diagnostic.goto_next, keymap_opts("Go to next diagnostic"))
+	vim.keymap.set({ "n", "v" }, "<leader>vca", vim.lsp.buf.code_action, keymap_opts("Show code actions"))
+	vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, keymap_opts("Show references"))
+	vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, keymap_opts("Rename symbol"))
+	vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, keymap_opts("Show signature help"))
+
+	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, keymap_opts("Show line diagnostics"))
+	vim.keymap.set("n", "<leader>n", vim.diagnostic.goto_next, keymap_opts("Go to next diagnostic"))
+	vim.keymap.set("n", "<leader>dq", vim.diagnostic.setqflist, keymap_opts("Open diagnostics quickfix (project)"))
+	vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, keymap_opts("Open diagnostics loclist (buffer)"))
 end)
 
+-- Setup LSP
 lsp.setup()
 
+-- Diagnostic configuration
 vim.diagnostic.config({
-	virtual_text = false,
+	virtual_text = {
+		spacing = 4,
+		source = "if_many",
+		prefix = "●",
+		format = function(diagnostic)
+			local message = diagnostic.message:match("^[^\n]*") or diagnostic.message
+			return message
+		end,
+	},
+	float = vim.tbl_extend("force", diagnostic_float_opts, {
+		header = "",
+	}),
+	signs = true,
+	update_in_insert = false,
+	severity_sort = true,
 })
--- Show all diagnostics on current line in floating window
-vim.api.nvim_set_keymap("n", "<Leader>d", ":lua vim.diagnostic.open_float()<CR>", { noremap = true, silent = true })
--- Go to next diagnostic (if there are multiple on the same line, only shows
--- one at a time in the floating window)
-vim.api.nvim_set_keymap("n", "<Leader>n", ":lua vim.diagnostic.goto_next()<CR>", { noremap = true, silent = true })
+
+vim.api.nvim_create_autocmd("CursorHold", {
+	callback = function()
+		vim.diagnostic.open_float(
+			nil,
+			vim.tbl_extend("force", diagnostic_float_opts, {
+				scope = "cursor",
+			})
+		)
+	end,
+})
+
+vim.opt.updatetime = 300
+
+-- ESLint autofix on save
+local eslint_group = vim.api.nvim_create_augroup("ESLintAutofix", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = eslint_group,
+	pattern = js_ts_filetypes,
+	callback = function(args)
+		local clients = vim.lsp.get_active_clients({ bufnr = args.buf })
+		for _, client in ipairs(clients) do
+			if client.name == "eslint" then
+				vim.cmd("EslintFixAll")
+				return
+			end
+		end
+	end,
+	desc = "Run ESLint autofix before saving",
+})
