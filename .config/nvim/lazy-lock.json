@@ -6,6 +6,7 @@
   "conform.nvim": { "branch": "master", "commit": "023f795dbcf32d4351b6a9ed2e613d471b5bb812" },
   "darkbone": { "branch": "master", "commit": "7d1c8fe3de6ad2047c56a5750e8bd2b1d737371b" },
   "friendly-snippets": { "branch": "main", "commit": "de8fce94985873666bd9712ea3e49ee17aadb1ed" },
+  "gitsigns.nvim": { "branch": "main", "commit": "8bdaccdb897945a3c99c1ad8df94db0ddf5c8790" },
   "harpoon": { "branch": "master", "commit": "1bc17e3e42ea3c46b33c0bbad6a880792692a1b3" },
   "hop.nvim": { "branch": "v2", "commit": "90db1b2c61b820e230599a04fedcd2679e64bd07" },
   "lazy.nvim": { "branch": "main", "commit": "7e6c863bc7563efbdd757a310d17ebc95166cef3" },

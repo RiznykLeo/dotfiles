@@ -39,6 +39,12 @@ local plugins = {
 	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", lazy = true } },
 	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
 	"HiPhish/rainbow-delimiters.nvim",
+	{
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("gitsigns").setup()
+		end,
+	},
 
 	"tpope/vim-fugitive",
 	"tpope/vim-commentary",
