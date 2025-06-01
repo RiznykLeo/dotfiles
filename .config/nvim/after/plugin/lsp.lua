@@ -50,6 +50,27 @@ nvim_lsp.biome.setup({
 	autostart = false, -- Don't start automatically
 })
 
+-- Relay LSP
+-- NOTE: install relay compiler globally to work
+nvim_lsp.relay_lsp.setup({
+	-- (default: false) Whether or not we should automatically start the
+	-- Relay Compiler in watch mode when you open a project
+	auto_start_compiler = false,
+	-- (default: nil) Path to a relay config relative to the `root_dir`.
+	-- Without this, the compiler will search for your config. This is
+	-- helpful if your relay project is in a nested directory.
+	path_to_config = nil,
+	root_dir = nvim_lsp.util.root_pattern("relay.config.*", "package.json"),
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"javascript.jsx",
+		"typescript",
+		"typescriptreact",
+		"typescript.tsx",
+	},
+})
+
 lsp.set_preferences({
 	suggest_lsp_servers = true,
 	sign_icons = {
