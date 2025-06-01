@@ -34,17 +34,25 @@ local plugins = {
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 	{ "stevearc/conform.nvim", opts = {} },
 	{ "stevearc/oil.nvim", opts = {} },
+	"lambdalisue/suda.vim",
 
 	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", lazy = true } },
 	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
 	"HiPhish/rainbow-delimiters.nvim",
 
-	"ThePrimeagen/harpoon",
-	"lambdalisue/suda.vim",
-
 	"tpope/vim-fugitive",
 	"tpope/vim-commentary",
 	"tpope/vim-surround",
+
+	"ThePrimeagen/harpoon",
+	{
+		"phaazon/hop.nvim",
+		branch = "v2",
+		config = function()
+			require("hop").setup()
+			vim.keymap.set("n", "gw", ":HopWord<CR>", {})
+		end,
+	},
 
 	{ "mfussenegger/nvim-dap" },
 
