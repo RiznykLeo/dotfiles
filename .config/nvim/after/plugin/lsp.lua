@@ -177,7 +177,7 @@ local function has_eslint_config()
 			return true
 		end
 	end
-	
+
 	-- Check for package.json with eslint config
 	local package_json = current_dir .. "/package.json"
 	if file_exists(package_json) then
@@ -187,18 +187,18 @@ local function has_eslint_config()
 			return true
 		end
 	end
-	
+
 	return false
 end
 
 -- ESLint autofix on save - only when ESLint config exists and not using Biome
 vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = js_ts_filetypes,
-	callback = function(args)
+	pattern = { "*.tsx", "*.ts", "*.jsx", "*.js" },
+	callback = function()
 		-- Only run ESLint if we have an ESLint config and not a Biome config
 		if has_eslint_config() and not has_biome_config() then
 			vim.cmd("EslintFixAll")
 		end
-		-- Biome formatting is handled by conform.nvim
 	end,
 })
+
