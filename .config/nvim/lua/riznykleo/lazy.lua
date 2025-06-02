@@ -10,15 +10,15 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	})
 end
 vim.opt.rtp:prepend(lazypath)
+
 local plugins = {
-	-- LSP
+	-- LSP & COMPLETION
 	{
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v3.x",
 		dependencies = {
 			{ "williamboman/mason.nvim" },
 			{ "williamboman/mason-lspconfig.nvim" },
-
 			{ "neovim/nvim-lspconfig" },
 			-- Autocompletion
 			{ "hrsh7th/nvim-cmp" },
@@ -28,31 +28,10 @@ local plugins = {
 			{ "rafamadriz/friendly-snippets" },
 		},
 	},
-	--
 
-	{ "nvim-telescope/telescope.nvim", version = "0.1.4", dependencies = { "nvim-lua/plenary.nvim" } },
+	-- SYNTAX & PARSING
 	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-	{ "stevearc/conform.nvim", opts = {} },
-	{ "stevearc/oil.nvim", opts = {} },
-	"lambdalisue/suda.vim",
-
-	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", lazy = true } },
-	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
 	"HiPhish/rainbow-delimiters.nvim",
-	{
-		"lewis6991/gitsigns.nvim",
-		config = function()
-			require("gitsigns").setup()
-		end,
-	},
-	{
-		"echasnovski/mini.pairs",
-		version = false,
-		config = function()
-			require("mini.pairs").setup()
-		end,
-	},
-
 	{
 		"windwp/nvim-ts-autotag",
 		dependencies = "nvim-treesitter/nvim-treesitter",
@@ -67,10 +46,9 @@ local plugins = {
 		end,
 	},
 
-	"tpope/vim-fugitive",
-	"tpope/vim-commentary",
-	"tpope/vim-surround",
-
+	-- NAVIGATION & SEARCH
+	{ "nvim-telescope/telescope.nvim", version = "0.1.4", dependencies = { "nvim-lua/plenary.nvim" } },
+	{ "stevearc/oil.nvim", opts = {} },
 	"ThePrimeagen/harpoon",
 	{
 		"phaazon/hop.nvim",
@@ -81,7 +59,36 @@ local plugins = {
 		end,
 	},
 
+	-- EDITING & TEXT MANIPULATION
+	{ "stevearc/conform.nvim", opts = {} },
+	{
+		"echasnovski/mini.pairs",
+		version = false,
+		config = function()
+			require("mini.pairs").setup()
+		end,
+	},
+	"tpope/vim-commentary",
+	"tpope/vim-surround",
+
+	-- GIT INTEGRATION
+	{
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("gitsigns").setup()
+		end,
+	},
+	"tpope/vim-fugitive",
+
+	-- UI & VISUAL
+	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", lazy = true } },
+	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },
+
+	-- DEBUGGING
 	{ "mfussenegger/nvim-dap" },
+
+	-- UTILITIES
+	"lambdalisue/suda.vim",
 
 	-- THEMES
 	{ "rose-pine/neovim", name = "rose-pine" },
@@ -89,7 +96,6 @@ local plugins = {
 	{ "tpope/vim-vividchalk", name = "vividchalk" },
 	{ "mrkn/mrkn256.vim", name = "mrkn256" },
 	{ "fneu/breezy", name = "breezy" },
-	--
 }
 
 local opts = {}
