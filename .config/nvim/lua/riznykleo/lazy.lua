@@ -78,7 +78,12 @@ local plugins = {
 			require("gitsigns").setup()
 		end,
 	},
-	"tpope/vim-fugitive",
+	{
+		"tpope/vim-fugitive",
+		config = function()
+			vim.keymap.set("n", "<leader>gs", vim.cmd.Git, { desc = "Git status" })
+		end,
+	},
 
 	-- UI & VISUAL
 	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", lazy = true } },

@@ -23,7 +23,7 @@ require("lualine").setup({
 		lualine_c = { "diagnostics" },
 		lualine_x = {},
 		lualine_y = {},
-		lualine_z = { "filename" },
+		lualine_z = { { "filename", path = 1 } },
 	},
 	inactive_sections = {
 		lualine_a = {},
