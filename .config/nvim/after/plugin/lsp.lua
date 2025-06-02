@@ -8,6 +8,10 @@ local js_ts_filetypes = {
 	"typescriptreact",
 	"typescript.tsx",
 }
+local graphql_filetypes = {
+	"graphql",
+}
+local js_ts_graphql_filetypes = vim.list_extend(vim.deepcopy(js_ts_filetypes), graphql_filetypes)
 
 local diagnostic_float_opts = {
 	focusable = false,
@@ -20,7 +24,7 @@ local diagnostic_float_opts = {
 -- Mason
 require("mason").setup({})
 require("mason-lspconfig").setup({
-	ensure_installed = { "ts_ls", "eslint@4.8.0" },
+	ensure_installed = { "ts_ls", "eslint@4.8.0", "graphql" },
 	handlers = {
 		lsp.default_setup,
 		lua_ls = function()
@@ -70,6 +74,12 @@ local function has_biome_config()
 	return false
 end
 
+-- GraphQL LSP setup
+nvim_lsp.graphql.setup({
+	filetypes = js_ts_graphql_filetypes,
+	root_dir = nvim_lsp.util.root_pattern("schema.graphql", "package.json"),
+})
+
 -- Biome setup - only enabled when a biome config is found
 nvim_lsp.biome.setup({
 	autostart = function()
@@ -83,7 +93,7 @@ nvim_lsp.relay_lsp.setup({
 	auto_start_compiler = false,
 	path_to_config = nil,
 	root_dir = nvim_lsp.util.root_pattern("relay.config.*", "package.json"),
-	filetypes = js_ts_filetypes,
+	filetypes = js_ts_graphql_filetypes,
 })
 
 -- LSP preferences
@@ -201,4 +211,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		end
 	end,
 })
-
