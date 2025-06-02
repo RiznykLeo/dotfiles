@@ -26,12 +26,7 @@ vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format buffer" })
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz", { desc = "Next quickfix item" })
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz", { desc = "Previous quickfix item" })
 
-vim.keymap.set(
-	"n",
-	"<leader>s",
-	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-	{ desc = "Search and replace word under cursor" }
-)
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "Search and replace word under cursor" })
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true, desc = "Make file executable" })
 
 vim.keymap.set("n", "<leader>w", "<cmd>w<CR>", { desc = "Save file" })
@@ -45,3 +40,4 @@ vim.keymap.set("v", "gl", "$", { desc = "Go to end of line" })
 vim.keymap.set({ "n", "v" }, "ge", "G", { desc = "Go to end of file" })
 
 vim.keymap.set("n", "<leader>k", "K", { desc = "Show documentation" })
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { desc = "Rename symbol" })
