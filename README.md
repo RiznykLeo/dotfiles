@@ -1,48 +1,42 @@
-# My dotfiles
-
+# RiznykLeo dotfiles
 
 ## Requirements
 
-Ensure you have the following installed on your system
+Ensure you have git and stow installed on your system before proceeding.
 
-## Git
-
-```
-brew install git
+```bash
+brew install git stow
 ```
 
-## Stow
+## Setup
 
-```
-brew install stow
-```
+First, check out the dotfiles repo in your $HOME directory using git:
 
-## Installation
-
-First, check out the dotfiles repo in your $HOME directory using git
-
-
-```
-$ git clone git@github.com/RiznykLeo/dotfiles.git
-$ cd dotfiles
+```bash
+git clone git@github.com/RiznykLeo/dotfiles.git
+cd dotfiles
 ```
 
-then use GNU stow to create symlinks
+Then use GNU stow to create symlinks:
 
+```bash
+stow .
 ```
-$ stow .
-````
 
 ## Apps
 
-### Helix
+Install main workflow apps
 
-install spellchecker and ensure it's in PATH
-```
-$ npm/pnpm/bun i -g @vlabo/cspell-lsp
-```
-
-install ccase for case converions
 ```bash
-cargo install ccase
+brew install fish tmux nvim zoxide fzf exa rg lazydocker eza bat
+
 ```
+
+Add TPM
+
+```bash
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+```
+
+Start tmux and install the plugins `Ctrl+I`

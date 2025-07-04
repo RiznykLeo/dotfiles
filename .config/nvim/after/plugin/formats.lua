@@ -24,6 +24,7 @@ local formatters_table = {
 	lua = { "stylua" },
 
 	css = { "prettierd" },
+	graphql = { "prettierd" },
 	html = { "prettierd" },
 	json = { "prettierd" },
 	yaml = { "prettierd" },
@@ -50,7 +51,7 @@ require("conform").setup({
 
 	format_on_save = function(bufnr)
 		-- Don't format if the file is huge
-		local max_filesize = 100 * 1024 -- 100 KB
+		local max_filesize = 1000 * 1024 -- 1000 KB
 		local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(bufnr))
 		if ok and stats and stats.size > max_filesize then
 			return
@@ -63,4 +64,3 @@ require("conform").setup({
 		}
 	end,
 })
-

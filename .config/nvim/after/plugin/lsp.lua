@@ -55,7 +55,7 @@ nvim_lsp.eslint.setup({
 		"eslint.config.js",
 		"package.json"
 	),
-	filetypes = js_ts_filetypes,
+	filetypes = js_ts_graphql_filetypes,
 })
 
 -- Utility function to detect Biome config
@@ -203,7 +203,7 @@ end
 
 -- ESLint autofix on save - only when ESLint config exists and not using Biome
 vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = { "*.tsx", "*.ts", "*.jsx", "*.js" },
+	pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.graphql" },
 	callback = function()
 		-- Only run ESLint if we have an ESLint config and not a Biome config
 		if has_eslint_config() and not has_biome_config() then

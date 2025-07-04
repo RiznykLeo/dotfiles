@@ -2,7 +2,7 @@ if status is-interactive
 
     # Environment variables
     set -x COLORTERM truecolor
-    set -x EDITOR hx
+    set -x EDITOR nvim 
 
     # Path for deno completions
     set fish_complete_path $fish_complete_path /Users/riznykleo/.zsh/completions
@@ -35,14 +35,17 @@ if status is-interactive
     eval (/opt/homebrew/bin/brew shellenv)
 
     # Aliases
-    alias zc="hx ~/.config/fish/config.fish"
-    alias zs="source ~/.config/fish/config.fish"
+    alias fconf ="nvim ~/.config/fish/config.fish"
+    alias fsource="source ~/.config/fish/config.fish"
     alias v="nvim ."
     alias vc="cd ~/.config/nvim && nvim ."
-    alias zl="zellij"
-    alias lz="lazygit"
     alias ghstc="$EDITOR $HOME/Library/Application\ Support/com.mitchellh.ghostty/config"
+
     alias cd="z"
+    alias cat="bat"
+    alias ls="eza"
+    alias lzd="lazydocker"
+    alias grep = "rg"
 
     # Initialize zoxide
     zoxide init fish | source
@@ -51,18 +54,5 @@ if status is-interactive
     fzf --fish | source
 
     set fish_greeting ""
-
-    # yazi function
-    function y
-        set -l tmp (mktemp -t "yazi-cwd.XXXXXX")
-        yazi $argv --cwd-file="$tmp"
-        if test -f $tmp
-            set -l new_dir (cat $tmp)
-            if test -n "$new_dir" -a "$new_dir" != "$PWD"
-                cd $new_dir
-            end
-            rm -f $tmp
-        end
-    end
 
 end
