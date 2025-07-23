@@ -14,7 +14,7 @@ local graphql_filetypes = {
 local js_ts_graphql_filetypes = vim.list_extend(vim.deepcopy(js_ts_filetypes), graphql_filetypes)
 
 local diagnostic_float_opts = {
-	focusable = true,
+	focusable = false,
 	close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
 	border = "rounded",
 	source = "always",
