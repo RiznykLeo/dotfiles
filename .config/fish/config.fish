@@ -38,6 +38,7 @@ if status is-interactive
     alias fconf ="nvim ~/.config/fish/config.fish"
     alias fsource="source ~/.config/fish/config.fish"
     alias v="nvim ."
+    alias nivm="nvim"
     alias vc="cd ~/.config/nvim && nvim ."
     alias ghstc="$EDITOR $HOME/Library/Application\ Support/com.mitchellh.ghostty/config"
 
@@ -45,7 +46,8 @@ if status is-interactive
     alias cat="bat"
     alias ls="eza"
     alias lzd="lazydocker"
-    alias grep = "rg"
+    alias lzg="lazygit"
+    alias grep="rg"
 
     # Initialize zoxide
     zoxide init fish | source

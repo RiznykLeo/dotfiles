@@ -14,7 +14,7 @@ local graphql_filetypes = {
 local js_ts_graphql_filetypes = vim.list_extend(vim.deepcopy(js_ts_filetypes), graphql_filetypes)
 
 local diagnostic_float_opts = {
-	focusable = false,
+	focusable = true,
 	close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
 	border = "rounded",
 	source = "always",
@@ -127,6 +127,17 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, keymap_opts("Show line diagnostics"))
 	vim.keymap.set("n", "<leader>dq", vim.diagnostic.setqflist, keymap_opts("Open diagnostics quickfix (project)"))
 	vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, keymap_opts("Open diagnostics loclist (buffer)"))
+
+	vim.keymap.set("n", "<leader>dy", function()
+		local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+		if #diagnostics > 0 then
+			local message = diagnostics[1].message
+			vim.fn.setreg("+", message) -- Copy to system clipboard
+			print("Copied diagnostic to clipboard: " .. message:sub(1, 50) .. "...")
+		else
+			print("No diagnostic on current line")
+		end
+	end, keymap_opts("Copy diagnostic to clipboard"))
 end)
 
 -- Setup LSP
