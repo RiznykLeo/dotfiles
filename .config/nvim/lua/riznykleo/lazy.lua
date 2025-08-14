@@ -58,6 +58,7 @@ local plugins = {
 			vim.keymap.set("n", "gw", ":HopWord<CR>", {})
 		end,
 	},
+	{ "chentoast/marks.nvim" },
 
 	-- EDITING & TEXT MANIPULATION
 	{ "stevearc/conform.nvim", opts = {} },
