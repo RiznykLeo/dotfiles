@@ -138,6 +138,19 @@ lsp.on_attach(function(client, bufnr)
 			print("No diagnostic on current line")
 		end
 	end, keymap_opts("Copy diagnostic to clipboard"))
+
+	-- Crates
+	vim.keymap.set("n", "<leader>cr", function()
+		require("crates").reload()
+	end, keymap_opts("Reload crates"))
+
+	vim.keymap.set("n", "<leader>cu", function()
+		require("crates").update_crate()
+	end, keymap_opts("Update crate"))
+
+	vim.keymap.set("n", "<leader>cU", function()
+		require("crates").update_all_crates()
+	end, keymap_opts("Update all crates"))
 end)
 
 -- Setup LSP
