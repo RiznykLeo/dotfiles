@@ -1,32 +1,32 @@
 function Colors(color)
-	-- Mac
-	color = color or "rose-pine"
-	--Windows
-	-- color = color or "mrkn256"
+	-- Rust getting different theme
+	if not color then
+		if vim.fn.filereadable("Cargo.toml") == 1 then
+			color = "vividchalk"
+			vim.opt.background = "dark"
+		else
+			color = color or "rose-pine"
+		end
+	end
+
 	vim.cmd.colorscheme(color)
+
+	local lualine_theme = vim.o.background == "dark" and "codedark" or "iceberg_light"
+	require("lualine").setup({
+		options = {
+			theme = lualine_theme,
+		},
+	})
 end
 
 function Dark(color)
-	Colors(color)
-
 	vim.opt.background = "dark"
-
-	require("lualine").setup({
-		options = {
-			theme = "codedark",
-		},
-	})
+	Colors(color)
 end
 
 function Light(color)
-	Colors(color)
 	vim.opt.background = "light"
-
-	require("lualine").setup({
-		options = {
-			theme = "iceberg_light",
-		},
-	})
+	Colors(color)
 end
 
 Colors()
