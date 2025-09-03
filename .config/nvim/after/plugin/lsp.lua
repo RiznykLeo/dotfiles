@@ -92,7 +92,7 @@ nvim_lsp.biome.setup({
 nvim_lsp.relay_lsp.setup({
 	auto_start_compiler = false,
 	path_to_config = nil,
-	root_dir = nvim_lsp.util.root_pattern("relay.config.*", "package.json"),
+	root_dir = nvim_lsp.util.root_pattern("relay.config.*"),
 	filetypes = js_ts_graphql_filetypes,
 })
 
