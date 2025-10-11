@@ -186,8 +186,6 @@ vim.api.nvim_create_autocmd("CursorHold", {
 	end,
 })
 
-vim.opt.updatetime = 300
-
 -- Function to check if a file exists
 local function file_exists(filename)
 	local stat = vim.loop.fs_stat(filename)
