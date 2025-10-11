@@ -57,6 +57,12 @@ nvim_lsp.eslint.setup({
 		"package.json"
 	),
 	filetypes = js_ts_graphql_filetypes,
+	on_attach = function(client, bufnr)
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			buffer = bufnr,
+			command = "EslintFixAll",
+		})
+	end,
 })
 
 -- GraphQL LSP setup
@@ -159,53 +165,5 @@ vim.api.nvim_create_autocmd("CursorHold", {
 				scope = "cursor",
 			})
 		)
-	end,
-})
-
--- Function to check if a file exists
-local function file_exists(filename)
-	local stat = vim.loop.fs_stat(filename)
-	return stat and stat.type == "file"
-end
-
--- Detect ESLint config
-local function has_eslint_config()
-	local eslint_configs = {
-		".eslintrc",
-		".eslintrc.js",
-		".eslintrc.json",
-		".eslintrc.yaml",
-		".eslintrc.yml",
-		"eslint.config.js",
-	}
-
-	local current_dir = vim.fn.getcwd()
-	for _, config in ipairs(eslint_configs) do
-		if file_exists(current_dir .. "/" .. config) then
-			return true
-		end
-	end
-
-	-- Check for package.json with eslint config
-	local package_json = current_dir .. "/package.json"
-	if file_exists(package_json) then
-		local content = vim.fn.readfile(package_json)
-		local json_str = table.concat(content, "\n")
-		if json_str:find('"eslintConfig"') then
-			return true
-		end
-	end
-
-	return false
-end
-
--- ESLint autofix on save - only when ESLint config exists
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.graphql", "*.astro" },
-	callback = function()
-		-- Only run ESLint if we have an ESLint config
-		if has_eslint_config() then
-			vim.cmd("EslintFixAll")
-		end
 	end,
 })
