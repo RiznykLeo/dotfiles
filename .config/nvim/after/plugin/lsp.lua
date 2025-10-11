@@ -7,6 +7,7 @@ local js_ts_filetypes = {
 	"typescript",
 	"typescriptreact",
 	"typescript.tsx",
+	"astro",
 }
 local graphql_filetypes = {
 	"graphql",
@@ -200,7 +201,7 @@ end
 
 -- ESLint autofix on save - only when ESLint config exists
 vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.graphql" },
+	pattern = { "*.tsx", "*.ts", "*.jsx", "*.js", "*.graphql", "*.astro" },
 	callback = function()
 		-- Only run ESLint if we have an ESLint config
 		if has_eslint_config() then

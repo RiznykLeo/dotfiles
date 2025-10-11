@@ -3,6 +3,7 @@ local js_ts_filetypes = {
 	"typescript",
 	"javascriptreact",
 	"typescriptreact",
+	"astro",
 }
 
 local formatters_table = {
