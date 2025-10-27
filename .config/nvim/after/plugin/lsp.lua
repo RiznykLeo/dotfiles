@@ -24,38 +24,55 @@ local diagnostic_float_opts = {
 
 -- Mason
 require("mason").setup({})
+
 require("mason-lspconfig").setup({
-	ensure_installed = { "ts_ls", "eslint@4.8.0", "graphql" },
+	ensure_installed = { "ts_ls", "eslint@4.8.0", "graphql", "lua_ls" },
+	automatic_enable = true,
 	handlers = {
 		lsp.default_setup,
-		lua_ls = function()
-			local lua_opts = lsp.nvim_lua_ls()
-			require("lspconfig").lua_ls.setup(lua_opts)
-		end,
 	},
 })
 
--- LSPs
-local nvim_lsp = require("lspconfig")
+-- Configure lua_ls separately with Neovim runtime
+vim.lsp.config("lua_ls", {
+	settings = {
+		Lua = {
+			runtime = {
+				version = "LuaJIT",
+			},
+			diagnostics = {
+				globals = { "vim" },
+			},
+			workspace = {
+				library = vim.api.nvim_get_runtime_file("", true),
+				checkThirdParty = false,
+			},
+			telemetry = {
+				enable = false,
+			},
+		},
+	},
+})
 
-nvim_lsp.ts_ls.setup({
-	root_dir = nvim_lsp.util.root_pattern("package.json"),
+-- LSPs using new vim.lsp.config API
+vim.lsp.config("ts_ls", {
+	root_markers = { "package.json" },
 	single_file_support = false,
 })
 
-nvim_lsp.eslint.setup({
+vim.lsp.config("eslint", {
 	settings = {
 		workingDirectory = { mode = "auto" },
 	},
-	root_dir = nvim_lsp.util.root_pattern(
+	root_markers = {
 		".eslintrc",
 		".eslintrc.js",
 		".eslintrc.json",
 		".eslintrc.yaml",
 		".eslintrc.yml",
 		"eslint.config.js",
-		"package.json"
-	),
+		"package.json",
+	},
 	filetypes = js_ts_graphql_filetypes,
 	on_attach = function(client, bufnr)
 		vim.api.nvim_create_autocmd("BufWritePre", {
@@ -66,16 +83,34 @@ nvim_lsp.eslint.setup({
 })
 
 -- GraphQL LSP setup
-nvim_lsp.graphql.setup({
+vim.lsp.config("graphql", {
 	filetypes = js_ts_graphql_filetypes,
-	root_dir = nvim_lsp.util.root_pattern("schema.graphql", "package.json"),
+	root_markers = { "schema.graphql", "package.json" },
 })
 
-nvim_lsp.relay_lsp.setup({
-	auto_start_compiler = false,
-	path_to_config = nil,
-	root_dir = nvim_lsp.util.root_pattern("relay.config.*"),
+vim.lsp.config("relay_lsp", {
+	cmd = { "relay-compiler", "lsp" },
+	root_markers = { "relay.config.*" },
 	filetypes = js_ts_graphql_filetypes,
+	settings = {
+		auto_start_compiler = false,
+		path_to_config = nil,
+	},
+})
+
+-- Pyright (remove duplicate setup)
+vim.lsp.config("pyright", {
+	root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
+	settings = {
+		python = {
+			pythonPath = vim.fn.getcwd() .. "/.venv/bin/python",
+			analysis = {
+				autoSearchPaths = true,
+				useLibraryCodeForTypes = true,
+				diagnosticMode = "workspace",
+			},
+		},
+	},
 })
 
 -- LSP preferences
@@ -114,7 +149,7 @@ lsp.on_attach(function(client, bufnr)
 		local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
 		if #diagnostics > 0 then
 			local message = diagnostics[1].message
-			vim.fn.setreg("+", message) -- Copy to system clipboard
+			vim.fn.setreg("+", message)
 			print("Copied diagnostic to clipboard: " .. message:sub(1, 50) .. "...")
 		else
 			print("No diagnostic on current line")
@@ -167,3 +202,10 @@ vim.api.nvim_create_autocmd("CursorHold", {
 		)
 	end,
 })
+
+-- Enable LSP servers on appropriate filetypes
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("eslint")
+vim.lsp.enable("graphql")
+vim.lsp.enable("relay_lsp")
+vim.lsp.enable("pyright")

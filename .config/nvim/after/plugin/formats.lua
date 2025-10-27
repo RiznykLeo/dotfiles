@@ -13,6 +13,7 @@ local formatters_table = {
 	json = { "prettierd" },
 	yaml = { "prettierd" },
 	markdown = { "prettierd" },
+	python = { "ruff_format" },
 }
 for _, ft in ipairs(js_ts_filetypes) do
 	formatters_table[ft] = { "prettierd" }
