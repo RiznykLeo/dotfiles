@@ -74,10 +74,16 @@ vim.lsp.config("eslint", {
 		"package.json",
 	},
 	filetypes = js_ts_graphql_filetypes,
+
 	on_attach = function(client, bufnr)
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			buffer = bufnr,
-			command = "EslintFixAll",
+			callback = function()
+				vim.lsp.buf.code_action({
+					context = { only = { "source.fixAll.eslint" }, diagnostics = {} },
+					apply = true,
+				})
+			end,
 		})
 	end,
 })
