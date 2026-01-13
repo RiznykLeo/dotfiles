@@ -75,6 +75,19 @@ local plugins = {
 			})
 		end,
 	},
+	{
+		"NvChad/nvim-colorizer.lua",
+		config = function()
+			require("colorizer").setup({
+				user_default_options = {
+					tailwind = true, -- Enable Tailwind colors
+					css = true,
+					css_fn = true, -- rgb(), hsl(), etc.
+					mode = "background", -- 'foreground', 'background', 'virtualtext'
+				},
+			})
+		end,
+	},
 
 	-- NAVIGATION & SEARCH
 	{ "nvim-telescope/telescope.nvim", version = "0.1.4", dependencies = { "nvim-lua/plenary.nvim" } },

@@ -91,7 +91,7 @@ vim.lsp.config("eslint", {
 -- GraphQL LSP setup
 vim.lsp.config("graphql", {
 	filetypes = js_ts_graphql_filetypes,
-	root_markers = { "schema.graphql", "package.json" },
+	root_markers = { "schema.graphql", "package.json", ".graphqlrc.yml" },
 })
 
 vim.lsp.config("relay_lsp", {
