@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-	-- LSP & COMPLETION
+	-- LSP
 	{
 		"VonHeikemen/lsp-zero.nvim",
 		branch = "v3.x",
@@ -20,13 +20,14 @@ local plugins = {
 			{ "williamboman/mason.nvim" },
 			{ "williamboman/mason-lspconfig.nvim" },
 			{ "neovim/nvim-lspconfig" },
-			-- Autocompletion
-			{ "hrsh7th/nvim-cmp" },
-			{ "hrsh7th/cmp-nvim-lsp" },
-			{ "L3MON4D3/LuaSnip" },
-			{ "saadparwaiz1/cmp_luasnip" },
-			{ "rafamadriz/friendly-snippets" },
 		},
+	},
+
+	-- Autocompletion
+	{
+		"saghen/blink.cmp",
+		dependencies = "rafamadriz/friendly-snippets",
+		version = "1.*",
 	},
 
 	-- LANGUAGE SPECIFIC PLUGINS

@@ -14,6 +14,8 @@ local graphql_filetypes = {
 }
 local js_ts_graphql_filetypes = vim.list_extend(vim.deepcopy(js_ts_filetypes), graphql_filetypes)
 
+local blink_cmp = require("blink.cmp")
+
 local diagnostic_float_opts = {
 	focusable = false,
 	close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
@@ -35,6 +37,7 @@ require("mason-lspconfig").setup({
 
 -- Configure lua_ls separately with Neovim runtime
 vim.lsp.config("lua_ls", {
+	capabilities = blink_cmp.get_lsp_capabilities(), -- ADD THIS LINE
 	settings = {
 		Lua = {
 			runtime = {
@@ -56,11 +59,13 @@ vim.lsp.config("lua_ls", {
 
 -- LSPs using new vim.lsp.config API
 vim.lsp.config("ts_ls", {
+	capabilities = blink_cmp.get_lsp_capabilities(), -- ADD THIS LINE
 	root_markers = { "package.json" },
 	single_file_support = false,
 })
 
 vim.lsp.config("eslint", {
+	capabilities = blink_cmp.get_lsp_capabilities(), -- ADD THIS LINE
 	settings = {
 		workingDirectory = { mode = "auto" },
 	},
@@ -90,11 +95,13 @@ vim.lsp.config("eslint", {
 
 -- GraphQL LSP setup
 vim.lsp.config("graphql", {
+	capabilities = blink_cmp.get_lsp_capabilities(), -- ADD THIS LINE
 	filetypes = js_ts_graphql_filetypes,
 	root_markers = { "schema.graphql", "package.json", ".graphqlrc.yml" },
 })
 
 vim.lsp.config("relay_lsp", {
+	capabilities = blink_cmp.get_lsp_capabilities(), -- ADD THIS LINE
 	cmd = { "relay-compiler", "lsp" },
 	root_markers = { "relay.config.*" },
 	filetypes = js_ts_graphql_filetypes,
@@ -106,6 +113,7 @@ vim.lsp.config("relay_lsp", {
 
 -- Pyright (remove duplicate setup)
 vim.lsp.config("pyright", {
+	capabilities = blink_cmp.get_lsp_capabilities(), -- ADD THIS LINE
 	root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "Pipfile", ".git" },
 	settings = {
 		python = {
