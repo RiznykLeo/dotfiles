@@ -14,6 +14,7 @@ local formatters_table = {
 	yaml = { "prettierd" },
 	markdown = { "prettierd" },
 	python = { "ruff_format" },
+	sql = { "sleek" },
 }
 for _, ft in ipairs(js_ts_filetypes) do
 	formatters_table[ft] = { "prettierd" }

@@ -130,6 +130,19 @@ local plugins = {
 		end,
 	},
 
+  -- DBs
+ {
+    'kristijanhusak/vim-dadbod-ui',
+    dependencies = {
+        { 'tpope/vim-dadbod', lazy = true },
+        { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
+    },
+    cmd = { 'DBUI', 'DBUIToggle', 'DBUIAddConnection' },
+    init = function()
+        vim.g.db_ui_use_nerd_fonts = 1
+    end,
+},
+
 	-- UI & VISUAL
 	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", lazy = true } },
 	{ "folke/todo-comments.nvim", dependencies = { "nvim-lua/plenary.nvim" }, opts = {} },

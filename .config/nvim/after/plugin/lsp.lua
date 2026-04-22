@@ -28,7 +28,7 @@ local diagnostic_float_opts = {
 require("mason").setup({})
 
 require("mason-lspconfig").setup({
-	ensure_installed = { "ts_ls", "eslint@4.8.0", "graphql", "lua_ls" },
+	ensure_installed = { "ts_ls", "eslint@4.8.0", "graphql", "lua_ls", "rust_analyzer" },
 	automatic_enable = true,
 	handlers = {
 		lsp.default_setup,
@@ -123,6 +123,16 @@ vim.lsp.config("pyright", {
 				useLibraryCodeForTypes = true,
 				diagnosticMode = "workspace",
 			},
+		},
+	},
+})
+
+vim.lsp.config("rust_analyzer", {
+	capabilities = blink_cmp.get_lsp_capabilities(),
+	settings = {
+		["rust-analyzer"] = {
+			checkOnSave = true,
+			check = { command = "clippy" },
 		},
 	},
 })
