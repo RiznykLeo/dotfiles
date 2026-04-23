@@ -40,10 +40,24 @@ local plugins = {
 			vim.g.rustfmt_autosave = 1
 		end,
 	},
+
 	{
 		"mrcjkb/rustaceanvim",
 		version = "^6",
-		lazy = false, -- This plugin is already lazy
+		lazy = false,
+		init = function()
+			vim.g.rustaceanvim = {
+				server = {
+					capabilities = require("blink.cmp").get_lsp_capabilities(),
+					settings = {
+						["rust-analyzer"] = {
+							checkOnSave = true,
+							check = { command = "clippy" },
+						},
+					},
+				},
+			}
+		end,
 	},
 	{
 		"saecki/crates.nvim",
@@ -130,18 +144,18 @@ local plugins = {
 		end,
 	},
 
-  -- DBs
- {
-    'kristijanhusak/vim-dadbod-ui',
-    dependencies = {
-        { 'tpope/vim-dadbod', lazy = true },
-        { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
-    },
-    cmd = { 'DBUI', 'DBUIToggle', 'DBUIAddConnection' },
-    init = function()
-        vim.g.db_ui_use_nerd_fonts = 1
-    end,
-},
+	-- DBs
+	{
+		"kristijanhusak/vim-dadbod-ui",
+		dependencies = {
+			{ "tpope/vim-dadbod", lazy = true },
+			{ "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+		},
+		cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection" },
+		init = function()
+			vim.g.db_ui_use_nerd_fonts = 1
+		end,
+	},
 
 	-- UI & VISUAL
 	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", lazy = true } },
